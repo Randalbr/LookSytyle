@@ -1,9 +1,11 @@
 import { useState } from "react";
 import '../styles/Home.css'
+import Categorias from '../components/Categorias'
 import Inicio from "../assets/Inicio.jpg";
-import banner1 from "../assets/1.jpg";
-import banner2 from "../assets/2.jpg";
-import banner3 from "../assets/1.jpg";
+import Pantalones from "../assets/Pantalones.jpg";
+import Camisas from "../assets/Camisas.jpg";
+import Zapatos from "../assets/Zapatos.jpg";
+import Accesorios from "../assets/Accesorios.jpg";
 
 export default function Home() {
   const slides = [
@@ -13,22 +15,22 @@ export default function Home() {
       text: "Explora lo último en moda urbana."
     },
     {
-      image: banner2,
+      image: Camisas,
       title: "Camisas",
       text: "Completa tu outfit con estilo."
     },
     {
-      image: banner3,
+      image: Pantalones,
       title: "Pantalones",
       text: "Hasta 50% en prendas seleccionadas."
     },
     {
-      image: banner3,
+      image: Zapatos,
       title: "Zapatos",
       text: "Hasta 50% en prendas seleccionadas."
     },
     {
-      image: banner3,
+      image: Accesorios,
       title: "Accesorios",
       text: "Hasta 50% en prendas seleccionadas."
     }
@@ -45,15 +47,14 @@ export default function Home() {
   };
 
   return (
+   <>
     <div className="carousel">
       <button className="arrow left" onClick={prevSlide}>❮</button>
 
       <div className="carousel-slide">
-        {/* Imagen con overlay oscuro */}
         <img src={slides[current].image} alt={`Slide ${current}`} />
         <div className="overlay"></div>
 
-        {/* Texto dinámico */}
         <div className="caption">
           <h2>{slides[current].title}</h2>
           <p>{slides[current].text}</p>
@@ -72,5 +73,7 @@ export default function Home() {
         ))}
       </div>
     </div>
+    <Categorias />
+    </>
   );
 }
