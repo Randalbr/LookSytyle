@@ -6,6 +6,8 @@ import Pantalones from "../assets/Pantalones.jpg";
 import Camisas from "../assets/Camisas.jpg";
 import Zapatos from "../assets/Zapatos.jpg";
 import Accesorios from "../assets/Accesorios.jpg";
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 
 export default function Home() {
   const slides = [
@@ -48,6 +50,7 @@ export default function Home() {
 
   return (
    <>
+   <Navbar/>
     <div className="carousel">
       <button className="arrow left" onClick={prevSlide}>❮</button>
 
@@ -74,6 +77,7 @@ export default function Home() {
       </div>
     </div>
     <Categorias />
+    <Footer/>
     </>
   );
 }

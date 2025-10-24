@@ -1,0 +1,73 @@
+.admin-crud {
+  padding: 30px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin: 20px;
+}
+
+.admin-crud h2 {
+  margin-bottom: 20px;
+  color: #111;
+  text-align: center;
+}
+
+.crud-form {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  justify-content: center;
+}
+
+.crud-form input {
+  padding: 10px;
+  width: 250px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.crud-form button {
+  background-color: #00bfa6;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.crud-form button:hover {
+  background-color: #009d8a;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+th, td {
+  padding: 12px;
+  border-bottom: 1px solid #ddd;
+  text-align: center;
+}
+
+th {
+  background-color: #00bfa6;
+  color: white;
+}
+
+.btn-edit, .btn-delete {
+  border: none;
+  cursor: pointer;
+  background: none;
+  font-size: 1.2rem;
+}
+
+.btn-edit:hover {
+  color: #009d8a;
+}
+
+.btn-delete:hover {
+  color: #e74c3c;
+}

@@ -1,0 +1,73 @@
+:root {
+  --primary-color: rgb(235, 146, 12);
+  --primary-hover: rgb(255, 170, 40);
+}
+
+.form-container {
+  max-width: 750px;
+  margin: 60px auto;
+  padding: 30px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.form-container h2 {
+  color: var(--primary-color);
+  margin-bottom: 20px;
+  font-size: 1.6rem;
+}
+
+.form-group {
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.form-group label {
+  font-weight: bold;
+  color: #555;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin-top: 8px;
+  font-size: 1rem;
+}
+
+.form-buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.btn-cancel,
+.btn-save {
+  flex: 1;
+  margin: 0 5px;
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-cancel {
+  background: #e74c3c;
+}
+
+.btn-cancel:hover {
+  background: #c0392b;
+}
+
+.btn-save {
+  background: var(--primary-color);
+}
+
+.btn-save:hover {
+  background: var(--primary-hover);
+}
