@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import Swal from "sweetalert2";
 import {
   getCategoriaById,
   createCategoria,
@@ -26,7 +27,11 @@ export default function FormCategoria() {
           setDescripcion(data.descripcion);
           if (data.imagen) setPreview(data.imagen);
         } catch (error) {
-          console.error("Error al cargar categoría:", error);
+          Swal.fire({
+            icon: "error",
+            title: "Error al cargar la categoría",
+            text: error.message || "No se pudo cargar la información.",
+          });
         }
       }
     };
@@ -45,27 +50,46 @@ export default function FormCategoria() {
     e.preventDefault();
 
     if (!nombre.trim() || !descripcion.trim()) {
-      alert("El nombre y la descripción son obligatorios");
+      Swal.fire({
+        icon: "warning",
+        title: "Campos obligatorios",
+        text: "El nombre y la descripción no pueden estar vacíos.",
+      });
       return;
     }
 
     setLoading(true);
+
     try {
       const categoriaData = { nombre, descripcion, imagen };
 
-      console.log(categoriaData)
       if (id) {
         await updateCategoria(id, categoriaData);
-        alert("Categoría actualizada correctamente ✅");
+        Swal.fire({
+          icon: "success",
+          title: "Categoría actualizada",
+          text: "La categoría se actualizó correctamente ✅",
+          timer: 1500,
+          showConfirmButton: false,
+        });
       } else {
         await createCategoria(categoriaData);
-        alert("Categoría creada correctamente ✅");
+        Swal.fire({
+          icon: "success",
+          title: "Categoría creada",
+          text: "La categoría se agregó correctamente ✅",
+          timer: 1500,
+          showConfirmButton: false,
+        });
       }
 
       navigate("/admin/categorias");
     } catch (error) {
-      console.error("Error al guardar categoría:", error);
-      alert("Error al guardar la categoría ❌");
+      Swal.fire({
+        icon: "error",
+        title: "Error al guardar",
+        text: error.message || "Ocurrió un error al guardar la categoría ❌",
+      });
     } finally {
       setLoading(false);
     }
@@ -120,11 +144,14 @@ export default function FormCategoria() {
         </div>
 
         <div className="form-buttons">
-         
           <button type="submit" className="btn-save" disabled={loading}>
             {loading ? "Guardando..." : id ? "Actualizar" : "Guardar"}
           </button>
-           <button type="button" className="btn-cancel" onClick={() => navigate(-1)}>
+          <button
+            type="button"
+            className="btn-cancel"
+            onClick={() => navigate(-1)}
+          >
             Cancelar
           </button>
         </div>

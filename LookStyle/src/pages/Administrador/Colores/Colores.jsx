@@ -21,7 +21,12 @@ export default function Colores() {
       }));
       setColores(formatted);
     } catch (error) {
-      console.error("Error al cargar colores:", error);
+      // Mostrar error si la carga falla
+      Swal.fire({
+        icon: "error",
+        title: "Error al cargar colores",
+        text: error.message || "No se pudieron obtener los colores.",
+      });
     }
   };
 
@@ -37,17 +42,46 @@ export default function Colores() {
     navigate(`/admin/colores/editar/${color.id}`);
   };
 
- const handleDeleteColor = async (id) => {
-    await deleteColor(id);
-    await loadColores();
+  const handleDeleteColor = async (id) => {
+    try {
+      const confirm = await Swal.fire({
+        title: "¿Eliminar color?",
+        text: "Esta acción no se puede deshacer.",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#d33",
+        cancelButtonColor: "#3085d6",
+        confirmButtonText: "Sí, eliminar",
+        cancelButtonText: "Cancelar",
+      });
+
+      if (confirm.isConfirmed) {
+        await deleteColor(id);
+        await loadColores();
+
+        Swal.fire({
+          icon: "success",
+          title: "Color eliminado",
+          text: "El color se ha eliminado correctamente.",
+          timer: 1500,
+          showConfirmButton: false,
+        });
+      }
+    } catch (error) {
+      Swal.fire({
+        icon: "error",
+        title: "Error al eliminar color",
+        text: error.message || "No se pudo eliminar el color.",
+      });
+    }
   };
 
   return (
     <>
-     <AdminTable
+      <AdminTable
         title="Gestión de Colores 🎨"
         data={colores}
-        columns={["id", "nombre", "codigo"]} 
+        columns={["id", "nombre", "codigo"]}
         onAdd={handleAdd}
         onEdit={handleEdit}
         onDelete={handleDeleteColor}

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import Swal from "sweetalert2";
 import {
   getColorById,
   createColor,
@@ -15,10 +16,18 @@ export default function FormColor() {
 
   useEffect(() => {
     const loadColor = async () => {
-      if (id) {
-        const data = await getColorById(id);
-        setNombre(data.nombre);
-        setCodigo(data.codigo);
+      try {
+        if (id) {
+          const data = await getColorById(id);
+          setNombre(data.nombre);
+          setCodigo(data.codigo);
+        }
+      } catch (error) {
+        Swal.fire({
+          icon: "error",
+          title: "Error al cargar el color",
+          text: error.message || "No se pudo obtener la información del color.",
+        });
       }
     };
     loadColor();
@@ -26,31 +35,55 @@ export default function FormColor() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     if (!nombre.trim()) {
-      alert("El nombre no puede estar vacío");
+      Swal.fire({
+        icon: "warning",
+        title: "Campo obligatorio",
+        text: "El nombre no puede estar vacío.",
+      });
       return;
     }
 
-     if (!codigo) {
-    alert("Selecciona un color antes de guardar");
-    return;
-  }
+    if (!codigo) {
+      Swal.fire({
+        icon: "warning",
+        title: "Selecciona un color",
+        text: "Debes elegir un color antes de guardar.",
+      });
+      return;
+    }
 
-   try {
+    try {
       const colorData = { nombre, codigo };
 
       if (id) {
         await updateColor(id, colorData);
-        alert("Color actualizado correctamente ✅");
+        Swal.fire({
+          icon: "success",
+          title: "Color actualizado",
+          text: "El color se actualizó correctamente ✅",
+          timer: 1500,
+          showConfirmButton: false,
+        });
       } else {
         await createColor(colorData);
-        alert("Color agregado correctamente ✅");
+        Swal.fire({
+          icon: "success",
+          title: "Color agregado",
+          text: "El color se agregó correctamente ✅",
+          timer: 1500,
+          showConfirmButton: false,
+        });
       }
 
       navigate("/admin/colores");
     } catch (error) {
-      console.error("Error al guardar color:", error);
-      alert("Error al guardar ❌");
+      Swal.fire({
+        icon: "error",
+        title: "Error al guardar",
+        text: error.message || "No se pudo guardar el color ❌",
+      });
     }
   };
 
@@ -78,11 +111,14 @@ export default function FormColor() {
         </div>
 
         <div className="form-buttons">
-         
           <button type="submit" className="btn-save">
             {id ? "Actualizar" : "Guardar"}
-            
-          </button> <button type="button" className="btn-cancel" onClick={() => navigate(-1)}>
+          </button>
+          <button
+            type="button"
+            className="btn-cancel"
+            onClick={() => navigate(-1)}
+          >
             Cancelar
           </button>
         </div>

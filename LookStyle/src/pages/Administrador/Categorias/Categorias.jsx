@@ -9,10 +9,12 @@ import AdminTable from "../../../components/AdminTable.jsx";
 
 export default function Categorias() {
   const [categorias, setCategorias] = useState([]);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const loadCategorias = async () => {
     try {
+      setLoading(true);
       const data = await getCategorias();
       const formatted = data.map((c) => ({
         id: c.id_categoria,
@@ -23,6 +25,9 @@ export default function Categorias() {
       setCategorias(formatted);
     } catch (error) {
       console.error("Error al cargar categorías:", error);
+      Swal.fire("Error", "No se pudieron cargar las categorías ❌", "error");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -39,10 +44,9 @@ export default function Categorias() {
   };
 
   const handleDeleteCategoria = async (id) => {
-      await deleteCategoria(id);
-      await loadCategorias();
-    };
-  
+        await deleteCategoria(id);
+        await loadCategorias();
+  };
 
   return (
     <>
@@ -53,6 +57,7 @@ export default function Categorias() {
         onAdd={handleAdd}
         onEdit={handleEdit}
         onDelete={handleDeleteCategoria}
+        loading={loading}
       />
     </>
   );

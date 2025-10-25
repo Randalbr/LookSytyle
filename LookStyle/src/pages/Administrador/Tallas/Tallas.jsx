@@ -9,18 +9,22 @@ import AdminTable from "../../../components/AdminTable.jsx";
 
 export default function Tallas() {
   const [tallas, setTallas] = useState([]);
- const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const loadTallas = async () => {
     try {
       const data = await getTallas();
-      const formatted = data.map((t) => ({ 
-        id: t.id_talla, 
+      const formatted = data.map((t) => ({
+        id: t.id_talla,
         nombre: t.nombre,
       }));
       setTallas(formatted);
     } catch (error) {
-      console.error("Error al cargar Tallas:", error);
+      Swal.fire({
+        icon: "error",
+        title: "Error al cargar tallas",
+        text: error.message || "No se pudieron obtener las tallas.",
+      });
     }
   };
 
@@ -29,16 +33,45 @@ export default function Tallas() {
   }, []);
 
   const handleAdd = () => {
-   navigate("/admin/tallas/agregar")
+    navigate("/admin/tallas/agregar");
   };
 
   const handleEdit = (talla) => {
-  navigate(`/admin/tallas/editar/${talla.id}`)
+    navigate(`/admin/tallas/editar/${talla.id}`);
   };
 
- const handleDeleteTalla = async (id) => {
-    await deleteTalla(id);
-    await loadTallas();
+  const handleDeleteTalla = async (id) => {
+    try {
+      const confirm = await Swal.fire({
+        title: "¿Eliminar talla?",
+        text: "Esta acción no se puede deshacer.",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#d33",
+        cancelButtonColor: "#3085d6",
+        confirmButtonText: "Sí, eliminar",
+        cancelButtonText: "Cancelar",
+      });
+
+      if (confirm.isConfirmed) {
+        await deleteTalla(id);
+        await loadTallas();
+
+        Swal.fire({
+          icon: "success",
+          title: "Talla eliminada",
+          text: "La talla se ha eliminado correctamente.",
+          timer: 1500,
+          showConfirmButton: false,
+        });
+      }
+    } catch (error) {
+      Swal.fire({
+        icon: "error",
+        title: "Error al eliminar talla",
+        text: error.message || "No se pudo eliminar la talla.",
+      });
+    }
   };
 
   return (
@@ -51,7 +84,6 @@ export default function Tallas() {
         onEdit={handleEdit}
         onDelete={handleDeleteTalla}
       />
-
     </>
   );
 }

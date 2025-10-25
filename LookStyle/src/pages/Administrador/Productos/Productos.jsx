@@ -11,6 +11,7 @@ export default function Productos() {
   const [productos, setProductos] = useState([]);
   const navigate = useNavigate();
 
+  // 🔹 Cargar productos
   const loadProductos = async () => {
     try {
       const data = await getProductos();
@@ -22,10 +23,10 @@ export default function Productos() {
         categoria: p.categoria,
         imagen: p.imagen,
       }));
-      console.log(formatted)
       setProductos(formatted);
     } catch (error) {
       console.error("Error al cargar productos:", error);
+      Swal.fire("Error", "No se pudieron cargar los productos ❌", "error");
     }
   };
 
@@ -33,19 +34,21 @@ export default function Productos() {
     loadProductos();
   }, []);
 
+  // 🔹 Agregar producto
   const handleAdd = () => {
     navigate("/admin/productos/agregar");
   };
 
+  // 🔹 Editar producto
   const handleEdit = (producto) => {
     navigate(`/admin/productos/editar/${producto.id}`);
   };
 
- const handleDeleteProducto = async (id) => {
-    await deleteProducto(id);
-    await loadProductos();
+  // 🔹 Eliminar producto con confirmación
+  const handleDeleteProducto = async (id) => {
+      await deleteProducto(id);
+      await loadProductos();
   };
-
 
   return (
     <>

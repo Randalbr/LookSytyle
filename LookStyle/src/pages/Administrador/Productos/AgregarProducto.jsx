@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import Swal from "sweetalert2";
 import {
   getProductoById,
   createProducto,
@@ -19,8 +20,9 @@ export default function FormProducto() {
   const [imagen, setImagen] = useState(null);
   const [categorias, setCategorias] = useState([]);
   const [preview, setPreview] = useState(null);
+  const [loading, setLoading] = useState(false);
 
-
+  // 🔹 Cargar categorías
   useEffect(() => {
     const loadCategorias = async () => {
       try {
@@ -28,29 +30,32 @@ export default function FormProducto() {
         setCategorias(data);
       } catch (error) {
         console.error("Error al cargar categorías:", error);
+        Swal.fire("Error", "No se pudieron cargar las categorías ❌", "error");
       }
     };
     loadCategorias();
   }, []);
 
+  // 🔹 Cargar producto si se está editando
   useEffect(() => {
     const loadProducto = async () => {
-      if (id) {
-        try {
-          const data = await getProductoById(id);
-          setNombre(data.nombre);
-          setDescripcion(data.descripcion);
-          setPrecio(data.precio_base);
-          setIdCategoria(data.id_categoria);
-          setImagen(data.imagen);
-        } catch (error) {
-          console.error("Error al cargar producto:", error);
-        }
+      if (!id) return;
+      try {
+        const data = await getProductoById(id);
+        setNombre(data.nombre);
+        setDescripcion(data.descripcion);
+        setPrecio(data.precio_base);
+        setIdCategoria(data.id_categoria);
+        if (data.imagen) setPreview(data.imagen);
+      } catch (error) {
+        console.error("Error al cargar producto:", error);
+        Swal.fire("Error", "No se pudo cargar el producto ❌", "error");
       }
     };
     loadProducto();
   }, [id]);
 
+  // 🔹 Previsualizar nueva imagen
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -59,45 +64,49 @@ export default function FormProducto() {
     }
   };
 
+  // 🔹 Enviar formulario
   const handleSubmit = async (e) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    if (!nombre.trim() || !descripcion.trim() || !precio || !idCategoria) {
-      alert("Por favor completa todos los campos obligatorios.");
-      return;
-    }
+  if (!nombre.trim() || !descripcion.trim() || !precio || !idCategoria) {
+    Swal.fire("Atención", "Por favor completa todos los campos obligatorios ⚠️", "warning");
+    return;
+  }
 
-    try {
-      const productoData = {
-        nombre,
-        descripcion,
-        precio_base: precio,
-        id_categoria: idCategoria,
-        imagen,
-      };
+  try {
+    setLoading(true);
 
-      console.log(productoData)
+    const formData = new FormData();
+    formData.append("nombre", nombre);
+    formData.append("descripcion", descripcion);
+    formData.append("precio_base", precio);
+    formData.append("id_categoria", idCategoria);
+    if (imagen) formData.append("imagen", imagen);
 
-      if (id) {
-        await updateProducto(id, productoData);
-        alert("Producto actualizado correctamente ✅");
-      } else {
-        await createProducto(productoData);
-        alert("Producto agregado correctamente ✅");
-      }
+    const response = id
+      ? await updateProducto(id, formData)
+      : await createProducto(formData);
 
-      navigate("/admin/productos");
-    } catch (error) {
-      console.error("Error al guardar producto:", error);
-      alert("Error al guardar el producto ❌");
-    }
-  };
+    Swal.fire(
+      id ? "Actualizado" : "Creado",
+      id ? "Producto actualizado correctamente ✅" : "Producto agregado correctamente ✅",
+      "success"
+    );
+
+    navigate("/admin/productos");
+  } catch (error) {
+    console.error("Error al guardar producto:", error);
+    Swal.fire("Error", "No se pudo guardar el producto ❌", "error");
+  } finally {
+    setLoading(false);
+  }
+};
 
   return (
     <div className="form-container">
       <h2>{id ? "Editar Producto" : "Agregar Producto"}</h2>
 
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} encType="multipart/form-data">
         <div className="form-group">
           <label>Nombre:</label>
           <input
@@ -143,7 +152,7 @@ export default function FormProducto() {
           </select>
         </div>
 
-          <div className="form-group">
+        <div className="form-group">
           <label>Imagen:</label>
           <input
             type="file"
@@ -168,9 +177,8 @@ export default function FormProducto() {
         </div>
 
         <div className="form-buttons">
-          
-          <button type="submit" className="btn-save">
-            {id ? "Actualizar" : "Guardar"}
+          <button type="submit" className="btn-save" disabled={loading}>
+            {loading ? "Guardando..." : id ? "Actualizar" : "Guardar"}
           </button>
           <button
             type="button"

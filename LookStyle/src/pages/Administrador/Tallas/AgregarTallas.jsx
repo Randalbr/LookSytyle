@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import Swal from "sweetalert2";
 import {
   getTallaById,
   createTalla,
@@ -10,14 +11,21 @@ import "../../../styles/FormPage.css";
 export default function FormTalla() {
   const navigate = useNavigate();
   const { id } = useParams();
-
   const [nombre, setNombre] = useState("");
 
   useEffect(() => {
     const loadTalla = async () => {
-      if (id) {
-        const data = await getTallaById(id);
-        setNombre(data.nombre);
+      try {
+        if (id) {
+          const data = await getTallaById(id);
+          setNombre(data.nombre);
+        }
+      } catch (error) {
+        Swal.fire({
+          icon: "error",
+          title: "Error al cargar la talla",
+          text: error.message || "No se pudo obtener la información de la talla.",
+        });
       }
     };
     loadTalla();
@@ -25,23 +33,44 @@ export default function FormTalla() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     if (!nombre.trim()) {
-      alert("El nombre no puede estar vacío");
+      Swal.fire({
+        icon: "warning",
+        title: "Campo obligatorio",
+        text: "El nombre no puede estar vacío.",
+      });
       return;
     }
 
     try {
       if (id) {
         await updateTalla(id, { nombre });
-        alert("Talla actualizada correctamente ✅");
+        Swal.fire({
+          icon: "success",
+          title: "Talla actualizada",
+          text: "La talla se actualizó correctamente ✅",
+          timer: 1500,
+          showConfirmButton: false,
+        });
       } else {
         await createTalla({ nombre });
-        alert("Talla agregada correctamente ✅");
+        Swal.fire({
+          icon: "success",
+          title: "Talla agregada",
+          text: "La talla se agregó correctamente ✅",
+          timer: 1500,
+          showConfirmButton: false,
+        });
       }
+
       navigate("/admin/tallas");
     } catch (error) {
-      console.error(error);
-      alert("Error al guardar ❌");
+      Swal.fire({
+        icon: "error",
+        title: "Error al guardar",
+        text: error.message || "No se pudo guardar la talla ❌",
+      });
     }
   };
 
@@ -60,11 +89,14 @@ export default function FormTalla() {
         </div>
 
         <div className="form-buttons">
-         
           <button type="submit" className="btn-save">
             {id ? "Actualizar" : "Guardar"}
           </button>
-           <button type="button" className="btn-cancel" onClick={() => navigate(-1)}>
+          <button
+            type="button"
+            className="btn-cancel"
+            onClick={() => navigate(-1)}
+          >
             Cancelar
           </button>
         </div>
