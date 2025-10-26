@@ -1,5 +1,6 @@
 import { useState } from "react";
 import '../styles/Navbar.css'
+import logito from '../assets/icono5.jpg'
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
@@ -9,7 +10,7 @@ export default function Navbar() {
       <header className="navbar">
       
         <div className="cabezeraPrincipal">
-          <img src="https://images.pexels.com/photos/162140/duckling-birds-yellow-fluffy-162140.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" alt="Logito" />
+          <img src={logito} alt="Logito" />
             <h1>LOOKSTYLE</h1>
 
          

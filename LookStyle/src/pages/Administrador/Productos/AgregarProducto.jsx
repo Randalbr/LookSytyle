@@ -36,6 +36,7 @@ export default function FormProducto() {
     loadCategorias();
   }, []);
 
+
   // 🔹 Cargar producto si se está editando
   useEffect(() => {
     const loadProducto = async () => {
@@ -45,7 +46,7 @@ export default function FormProducto() {
         setNombre(data.nombre);
         setDescripcion(data.descripcion);
         setPrecio(data.precio_base);
-        setIdCategoria(data.id_categoria);
+        setIdCategoria(data.categoria);
         if (data.imagen) setPreview(data.imagen);
       } catch (error) {
         console.error("Error al cargar producto:", error);
@@ -54,7 +55,6 @@ export default function FormProducto() {
     };
     loadProducto();
   }, [id]);
-
   // 🔹 Previsualizar nueva imagen
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -102,6 +102,8 @@ export default function FormProducto() {
   }
 };
 
+console.log(categorias)
+
   return (
     <div className="form-container">
       <h2>{id ? "Editar Producto" : "Agregar Producto"}</h2>
@@ -145,7 +147,7 @@ export default function FormProducto() {
           >
             <option value="">Selecciona una categoría</option>
             {categorias.map((cat) => (
-              <option key={cat.id_categoria} value={cat.id_categoria}>
+              <option key={cat.nombre} value={cat.nombre}>
                 {cat.nombre}
               </option>
             ))}
@@ -161,11 +163,11 @@ export default function FormProducto() {
             onChange={handleImageChange}
           />
           {preview && (
-            <div style={{ marginTop: 10 }}>
+            <div>
               <img
                 src={preview}
                 alt="Vista previa"
-                style={{
+               style={{
                   width: 150,
                   height: 150,
                   objectFit: "cover",

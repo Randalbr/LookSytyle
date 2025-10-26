@@ -14,9 +14,7 @@ export const getProductoById = async (id) => {
 };
 
 export const createProducto = async (formData) => {
-  console.log(formData)
-
-    const auth = getAuthHeaders();
+  const auth = getAuthHeaders();
 
   const res = await axios.post(`${API_URL}productos`, formData, {
     headers: {
