@@ -30,6 +30,9 @@ export const createProducto = async (formData) => {
 export const updateProducto = async (id, formData) => {
   const auth = getAuthHeaders();
 
+  console.log(formData);
+  
+
   const res = await axios.put(`${API_URL}productos/${id}`, formData, {
     headers: {
       ...auth.headers,

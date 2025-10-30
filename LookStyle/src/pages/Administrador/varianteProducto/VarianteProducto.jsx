@@ -30,7 +30,6 @@ export default function VarianteProducto() {
             ))
           : "Sin imágenes",
       }));
-      console.log(data)
       setVarianteProducto(formatted);
     } catch (error) {
       console.error("Error al cargar Variante Producto:", error);

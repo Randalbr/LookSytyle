@@ -182,8 +182,6 @@ export default function FormVariante() {
     }
   };  
 
-  console.log(tallas)
-
   return (
     <div className="form-container">
       <h2>{id ? "Editar Variante" : "Agregar Variante"}</h2>

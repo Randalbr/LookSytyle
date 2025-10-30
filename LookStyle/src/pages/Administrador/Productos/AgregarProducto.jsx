@@ -22,39 +22,43 @@ export default function FormProducto() {
   const [preview, setPreview] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  // 🔹 Cargar categorías
-  useEffect(() => {
-    const loadCategorias = async () => {
-      try {
-        const data = await getCategorias();
-        setCategorias(data);
-      } catch (error) {
-        console.error("Error al cargar categorías:", error);
-        Swal.fire("Error", "No se pudieron cargar las categorías ❌", "error");
+ // 🔹 Cargar categorías y producto (si se edita)
+useEffect(() => {
+  const loadData = async () => {
+    try {
+      const categoriasData = await getCategorias();
+      setCategorias(categoriasData);
+
+      // Si estamos en modo edición
+      if (id) {
+        const productoData = await getProductoById(id);
+        setNombre(productoData.nombre);
+        setDescripcion(productoData.descripcion);
+        setPrecio(productoData.precio_base);
+
+        // 🔹 Buscar ID de la categoría por nombre
+        const categoriaEncontrada = categoriasData.find(
+          (cat) => cat.nombre === productoData.categoria
+        );
+
+        if (categoriaEncontrada) {
+          setIdCategoria(categoriaEncontrada.id_categoria);
+        }
+
+        if (productoData.imagen) {
+          setPreview(productoData.imagen);
+        }
       }
-    };
-    loadCategorias();
-  }, []);
+    } catch (error) {
+      console.error("Error al cargar datos:", error);
+      Swal.fire("Error", "No se pudieron cargar los datos ❌", "error");
+    }
+  };
+
+  loadData();
+}, [id]);
 
 
-  // 🔹 Cargar producto si se está editando
-  useEffect(() => {
-    const loadProducto = async () => {
-      if (!id) return;
-      try {
-        const data = await getProductoById(id);
-        setNombre(data.nombre);
-        setDescripcion(data.descripcion);
-        setPrecio(data.precio_base);
-        setIdCategoria(data.categoria);
-        if (data.imagen) setPreview(data.imagen);
-      } catch (error) {
-        console.error("Error al cargar producto:", error);
-        Swal.fire("Error", "No se pudo cargar el producto ❌", "error");
-      }
-    };
-    loadProducto();
-  }, [id]);
   // 🔹 Previsualizar nueva imagen
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -102,7 +106,6 @@ export default function FormProducto() {
   }
 };
 
-console.log(categorias)
 
   return (
     <div className="form-container">
@@ -147,7 +150,7 @@ console.log(categorias)
           >
             <option value="">Selecciona una categoría</option>
             {categorias.map((cat) => (
-              <option key={cat.nombre} value={cat.nombre}>
+              <option key={cat.id_categoria} value={cat.id_categoria}>
                 {cat.nombre}
               </option>
             ))}

@@ -8,6 +8,7 @@ import AdminLayout from "./components/AdminLayout";
 
 import Home from "./pages/Home";
 import Login from "./pages/Login";
+import Camisas from "./pages/Camisas";
 
 
 // Rutas Protegidas
@@ -40,6 +41,7 @@ function App() {
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/" element={<Home />} />
+          <Route path="/camisas" element={<Camisas />} />
           {/* <Route path="/productos" element={<Productos />} />
           <Route path="/nosotros" element={<Nosotros />} />
           <Route path="/contacto" element={<Contacto />} /> */}
