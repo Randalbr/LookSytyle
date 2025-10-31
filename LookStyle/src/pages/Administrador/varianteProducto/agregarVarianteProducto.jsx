@@ -25,13 +25,11 @@ export default function FormVariante() {
   const [preview, setPreview] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  // 🔹 Manejo de tallas dinámicas
   const [tallas, setTallas] = useState([]);
   const [tallaTemp, setTallaTemp] = useState({ id_talla: "", cantidad: "" });
   const [opcionesTalla, setOpcionesTalla] = useState([]);
 
 
-  // Cargar productos y colores
   useEffect(() => {
     const loadData = async () => {
       try {
@@ -47,7 +45,6 @@ export default function FormVariante() {
     loadData();
   }, []);
 
-  // Si estamos editando, cargar la variante
   useEffect(() => {
     const loadVariante = async () => {
       if (!id) return;
@@ -85,7 +82,6 @@ export default function FormVariante() {
     loadVariante();
   }, [id]);
 
-  // Previsualizar imágenes nuevas
   const handleImageChange = (e) => {
     const files = Array.from(e.target.files);
     setImagenes(files);
@@ -93,49 +89,42 @@ export default function FormVariante() {
   };
 
    const handleAddTalla = () => {
-    if (!tallaTemp.id_talla || !tallaTemp.cantidad) {
-      Swal.fire("Atención", "Complete los campos de talla y cantidad ⚠️", "warning");
-      return;
-    }
+  if (!tallaTemp.id_talla || !tallaTemp.cantidad) {
+    Swal.fire("Atención", "Complete los campos de talla y cantidad ⚠️", "warning");
+    return;
+  }
 
-    // Evitar duplicados
-    if (tallas.some((t) => t.id_talla === tallaTemp.id_talla)) {
-      Swal.fire("Atención", "Esta talla ya fue agregada ⚠️", "warning");
-      return;
-    }
+  if (tallas.some((t) => t.id_talla == tallaTemp.id_talla)) {
+    Swal.fire("Atención", "Esta talla ya fue agregada ⚠️", "warning");
+    return;
+  }
 
-    // Buscar el nombre de la talla seleccionada
-    const tallaSeleccionada = opcionesTalla.find(
-      (t) => t.id_talla == tallaTemp.id_talla
-    );
+  const tallaSeleccionada = opcionesTalla.find(
+    (t) => t.id_talla == tallaTemp.id_talla
+  );
 
-    // Guardar tanto el id como el nombre (útil para mostrar)
-    setTallas([
-      ...tallas,
-      {
-        id_talla: tallaTemp.id_talla,
-        nombre: tallaSeleccionada?.nombre || "",
-        cantidad: tallaTemp.cantidad,
-      },
-    ]);
+  setTallas([
+    ...tallas,
+    {
+      id_talla: tallaSeleccionada.id_talla,
+      nombre: tallaSeleccionada?.nombre || "",
+      cantidad: tallaTemp.cantidad,
+    },
+  ]);
 
-    // Limpiar
-    setTallaTemp({ id_talla: "", cantidad: "" });
-  };
+  setTallaTemp({ id_talla: "", cantidad: "" });
+};
 
-  // 🔹 Eliminar una talla
   const handleRemoveTalla = (index) => {
     const updated = [...tallas];
     updated.splice(index, 1);
     setTallas(updated);
   };
 
-  // 🔹 Cambiar talla o cantidad
   const handleChangeTalla = (index, field, value) => {
     const updated = [...tallas];
     updated[index][field] = value;
 
-    // Si cambia el id_talla, actualizamos también el nombre
     if (field === "id_talla") {
       const tallaSeleccionada = opcionesTalla.find((t) => t.id_talla == value);
       updated[index].nombre = tallaSeleccionada?.nombre || "";
@@ -144,7 +133,6 @@ export default function FormVariante() {
     setTallas(updated);
   };
 
-  // Enviar formulario
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -187,7 +175,6 @@ export default function FormVariante() {
       <h2>{id ? "Editar Variante" : "Agregar Variante"}</h2>
 
       <form onSubmit={handleSubmit} encType="multipart/form-data">
-        {/* Producto */}
         <div className="form-group">
           <label>Producto:</label>
           <select value={idProducto} onChange={(e) => setIdProducto(e.target.value)}>
@@ -200,7 +187,6 @@ export default function FormVariante() {
           </select>
         </div>
 
-        {/* Color */}
         <div className="form-group">
           <label>Color:</label>
           <select value={idColor} onChange={(e) => setIdColor(e.target.value)}>
@@ -213,7 +199,6 @@ export default function FormVariante() {
           </select>
         </div>
 
-        {/* Precio */}
         <div className="form-group">
           <label>Precio:</label>
           <input
@@ -221,11 +206,11 @@ export default function FormVariante() {
             min="0"
             placeholder="Ej: 80000"
             value={precio}
+            defaultValue={0}
             onChange={(e) => setPrecio(e.target.value)}
           />
         </div>
 
-        {/* Estado */}
         {id && (
           <div className="form-group">
             <label>Estado:</label>
@@ -240,7 +225,6 @@ export default function FormVariante() {
       <label>Tallas:</label>
 
       <div className="tallas-input">
-        {/* Selector de tallas desde la BD */}
         <select
           value={tallaTemp.id_talla}
           onChange={(e) =>
@@ -269,7 +253,6 @@ export default function FormVariante() {
         </button>
       </div>
         
-      {/* Mostrar tallas agregadas */}
       <div className="tallas-list">
           {tallas.map((t, i) => (
             <div key={i} className="talla-item">
@@ -282,12 +265,11 @@ export default function FormVariante() {
               >
                 <option value="">Seleccione una talla</option>
                 {opcionesTalla.map((opt) => (
-                  <option key={opt.nombre} value={opt.nombre}>
-                    {opt.nombre}
-                  </option>
+                <option key={opt.id_talla} value={opt.id_talla}>
+                      {opt.nombre}
+                    </option>
                 ))}
               </select>
-
               <label>Cantidad:</label>
               <input
                 type="number"
@@ -310,9 +292,6 @@ export default function FormVariante() {
         </div>
 
     </div>
-
-
-        {/* Imágenes */}
         <div className="form-group">
           <label>Imágenes:</label>
           <input
@@ -321,27 +300,25 @@ export default function FormVariante() {
             multiple
             onChange={handleImageChange}
           />
-         {imagenes.length > 0 && (
-          <div className="imagenes-preview">
-            {imagenes.map((imgUrl, index) => (
-              <img
-                key={index}
-                src={imgUrl}
-                alt={`Variante imagen ${index + 1}`}
-                style={{
-                  width: 120,
-                  height: 120,
-                  objectFit: "cover",
-                  borderRadius: 8,
-                  margin: "0 5px",
-                }}
-              />
-            ))}
-          </div>
-        )}
+        {(preview.length > 0 || imagenes.length > 0) && (
+            <div className="imagenes-preview">
+              {(preview.length > 0 ? preview : imagenes).map((img, index) => (
+                <img
+                  key={index}
+                  src={typeof img === "string" ? img : URL.createObjectURL(img)}
+                  alt={`Variante imagen ${index + 1}`}
+                  style={{
+                    width: 120,
+                    height: 120,
+                    objectFit: "cover",
+                    borderRadius: 8,
+                    margin: "0 5px",
+                  }}
+                />
+              ))}
+            </div>
+          )}
         </div>
-
-        {/* Botones */}
         <div className="form-buttons">
           <button type="submit" className="btn-save" disabled={loading}>
             {loading ? "Guardando..." : id ? "Actualizar" : "Guardar"}
