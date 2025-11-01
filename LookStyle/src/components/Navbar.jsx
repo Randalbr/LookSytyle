@@ -25,7 +25,7 @@ export default function Navbar() {
             <a href="/"><li>Inicio</li></a>
             <a href="/camisas"><li>Camisas</li></a>
             <a href="/pantalones"><li>Pantalones</li></a>
-            <a href="/pantalones"><li>Zapatos</li></a>
+            <a href="/zapatos"><li>Zapatos</li></a>
             <a href="/accesorios"><li>Accesorios</li></a>
           </ul>
         </nav>

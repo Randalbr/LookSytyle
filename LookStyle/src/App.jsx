@@ -1,6 +1,4 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-// import Navbar from "./components/Navbar";
-// import Footer from "./components/Footer";
 import './styles/Index.css'
 
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -9,6 +7,9 @@ import AdminLayout from "./components/AdminLayout";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Camisas from "./pages/Camisas";
+import Pantalones from "./pages/Pantalones";
+import Zapatos from "./pages/Zapatos";
+import Accesorios from "./pages/Accesorios";
 
 
 // Rutas Protegidas
@@ -42,11 +43,10 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/" element={<Home />} />
           <Route path="/camisas" element={<Camisas />} />
-          {/* <Route path="/productos" element={<Productos />} />
-          <Route path="/nosotros" element={<Nosotros />} />
-          <Route path="/contacto" element={<Contacto />} /> */}
-
-
+          <Route path="/pantalones" element={<Pantalones />} />
+          <Route path="/zapatos" element={<Zapatos />} />
+          <Route path="/accesorios" element={<Accesorios />} />
+          
            {/* Rutas protegidas */}
           <Route
           path="/admin"
