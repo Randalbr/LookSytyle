@@ -15,7 +15,7 @@ export default function AdminTable({
 }) {
   const [search, setSearch] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 5; // 👉 cantidad de filas por página
+  const itemsPerPage = 5;
 
   const handleDelete = async (id) => {
     const confirm = await Swal.fire({
@@ -39,7 +39,6 @@ export default function AdminTable({
     }
   };
 
-  // 🔍 Filtrar datos
   const filteredData = data.filter((row) =>
     columns.some((col) =>
       String(row[col] || "")
@@ -48,7 +47,6 @@ export default function AdminTable({
     )
   );
 
-  // 📄 Calcular páginas
   const totalPages = Math.ceil(filteredData.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
   const paginatedData = filteredData.slice(

@@ -8,7 +8,6 @@ export default function VarianteProducto() {
   const [varianteProducto, setVarianteProducto] = useState([]);
   const navigate = useNavigate();
 
-  // 🔹 Cargar variantes desde el backend
   const loadVarianteProducto = async () => {
     try {
       const data = await getVariantes();
@@ -45,37 +44,15 @@ export default function VarianteProducto() {
     loadVarianteProducto();
   }, []);
 
-  // 🔹 Ir a agregar variante
   const handleAdd = () => navigate("/admin/varianteProductos/agregar");
 
-  // 🔹 Ir a editar variante
   const handleEdit = (variante) =>{
     navigate(`/admin/varianteProductos/editar/${variante.id}`);
   }
 
-  // 🔹 Eliminar variante
   const handleDeleteVarianteProducto = async (id) => {
-    const result = await Swal.fire({
-      title: "¿Está seguro?",
-      text: "Esta acción eliminará la variante permanentemente.",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Sí, eliminar",
-      cancelButtonText: "Cancelar",
-    });
-
-    if (result.isConfirmed) {
-      try {
         await deleteVariante(id);
         await loadVarianteProducto();
-        Swal.fire("Eliminado", "La variante ha sido eliminada.", "success");
-      } catch (error) {
-        console.error("Error al eliminar variante:", error);
-        Swal.fire("Error", "No se pudo eliminar la variante.", "error");
-      }
-    }
   };
 
   return (

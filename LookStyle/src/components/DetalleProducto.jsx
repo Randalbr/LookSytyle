@@ -51,7 +51,6 @@ export default function DetalleProductoModal({ producto, onClose }) {
         </button>
 
         <div className="detalle-card">
-          {/* 🔹 Carrusel */}
           <div className="detalle-carousel">
             {imagenes.length > 0 && (
               <>
@@ -87,7 +86,6 @@ export default function DetalleProductoModal({ producto, onClose }) {
             )}
           </div>
 
-          {/* 🔹 Información */}
           <div className="detalle-info">
             <h2 className="detalle-titulo">{producto.nombre}</h2>
             <p>{producto.descripcion}</p>
