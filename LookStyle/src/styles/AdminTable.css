@@ -186,6 +186,7 @@ tr:hover td {
   cursor: pointer;
   font-size: 14px;
   transition: all 0.3s ease;
+  align-items: center;
 }
 
 .page-btn:hover {

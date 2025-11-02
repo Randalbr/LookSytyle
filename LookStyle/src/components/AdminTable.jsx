@@ -2,8 +2,9 @@ import { useState } from "react";
 import Swal from "sweetalert2";
 import "../styles/AdminTable.css";
 import { CgAdd } from "react-icons/cg";
-import { MdDelete } from "react-icons/md";
+import { MdDelete, MdNavigateBefore, MdNavigateNext } from "react-icons/md";
 import { FaPen } from "react-icons/fa";
+
 
 export default function AdminTable({
   title,
@@ -154,7 +155,7 @@ export default function AdminTable({
             onClick={() => handlePageChange(currentPage - 1)}
             disabled={currentPage === 1}
           >
-            ← Anterior
+           <MdNavigateBefore /> Anterior
           </button>
 
           {[...Array(totalPages)].map((_, index) => (
@@ -174,7 +175,7 @@ export default function AdminTable({
             onClick={() => handlePageChange(currentPage + 1)}
             disabled={currentPage === totalPages}
           >
-            Siguiente →
+            Siguiente <MdNavigateNext />
           </button>
         </div>
       )}

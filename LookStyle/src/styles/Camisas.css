@@ -1,7 +1,7 @@
 .productos-container {
   padding: 80px 8%;
   text-align: center;
-  background-color: #f9f9f9;
+  background-color: #e7e2e2;
   min-height: 100vh;
 }
 
@@ -100,9 +100,70 @@
 .producto-info .precio {
   font-size: 1.15rem;
   font-weight: bold;
-  color: #ffb400;
+  color: #000000;
   letter-spacing: 0.5px;
 }
+
+.producto-card:hover .precio {
+  color: #ff9900; /* Pequeño acento dorado al pasar el cursor */
+}
+
+
+.buscador-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  width: 700px;
+  margin-bottom: 30px;
+}
+
+.input-busqueda,
+.select-precio {
+  padding: 10px 15px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  background-color: #fafafa;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
+  outline: none;
+  transition: all 0.3s ease;
+  color: #333;
+}
+
+/* 📱 Ajuste de tamaños */
+.input-busqueda {
+  width: 500px;
+}
+
+.select-precio {
+  width: 200px;
+}
+
+/* 🎨 Efectos al enfocar */
+.input-busqueda:focus,
+.select-precio:focus {
+  border-color: #ffb400;
+  background-color: #ffb400;
+  box-shadow: 0 0 8px rgba(0, 123, 255, 0.2);
+}
+
+/* 🎨 Hover sutil */
+.input-busqueda:hover,
+.select-precio:hover {
+  background-color: #fff;
+}
+
+/* 🌙 Si quieres un poco más de contraste sobre fondo blanco */
+.buscador-container {
+  background-color: #f2f2f2;
+  padding: 15px 25px;
+  border-radius: 15px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+  width: fit-content;
+  margin: 0 auto 40px auto;
+}
+
 
 /* 📱 Responsivo */
 @media (max-width: 600px) {
