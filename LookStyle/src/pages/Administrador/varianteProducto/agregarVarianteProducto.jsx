@@ -67,12 +67,17 @@ export default function FormVariante() {
           : [];
 
         setTallas(
-          tallasArray.map((t) => ({
-            id_talla: t.nombre?? "",
-            cantidad: t.cantidad?? 1,
-          })) 
+          tallasArray.map((t) => {
+            const tallaObj = opcionesTalla.find(
+              (opt) => opt.nombre === t.nombre || opt.id_talla == t.id_talla
+            );
+            return {
+              id_talla: tallaObj?.id_talla || t.id_talla || "",
+              nombre: tallaObj?.nombre || t.nombre || "",
+              cantidad: t.cantidad ?? 1,
+            };
+          })
         );
-       
       }
       } catch (error) {
         console.error("Error al cargar variante:", error);
@@ -169,7 +174,7 @@ export default function FormVariante() {
       setLoading(false);
     }
   };  
-
+  
   return (
     <div className="form-container">
       <h2>{id ? "Editar Variante" : "Agregar Variante"}</h2>
@@ -206,7 +211,6 @@ export default function FormVariante() {
             min="0"
             placeholder="Ej: 80000"
             value={precio}
-            defaultValue={0}
             onChange={(e) => setPrecio(e.target.value)}
           />
         </div>
@@ -264,10 +268,10 @@ export default function FormVariante() {
                 }
               >
                 <option value="">Seleccione una talla</option>
-                {opcionesTalla.map((opt) => (
-                <option key={opt.id_talla} value={opt.id_talla}>
-                      {opt.nombre}
-                    </option>
+                {opcionesTalla.map((a) => (
+                <option key={a.id_talla} value={a.id_talla}>
+                    {a.nombre}
+                </option>
                 ))}
               </select>
               <label>Cantidad:</label>
