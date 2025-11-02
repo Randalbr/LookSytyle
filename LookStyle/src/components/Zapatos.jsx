@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import "../styles/Camisas.css";
 import { getProductos } from "../service/productoService.js"; 
+import DetalleProductoModal from "./DetalleProducto.jsx";
 
 export default function ProductosZapatos() {
   const [productos, setProductos] = useState([]);
+  const [productoSeleccionado, setProductoSeleccionado] = useState(null);
 
   useEffect(() => {
     const fetchProductos = async () => {
@@ -13,9 +14,7 @@ export default function ProductosZapatos() {
         const data = response.data || response;
 
         const zapatos = data.filter(
-          (prod) =>
-            prod.categoria &&
-            prod.categoria.toLowerCase() === "zapatos"
+          (prod) => prod.categoria?.toLowerCase() ===  "zapatos"
         );
         setProductos(zapatos);
       } catch (error) {
@@ -35,9 +34,10 @@ export default function ProductosZapatos() {
           <p>No hay productos disponibles.</p>
         ) : (
           productos.map((prod) => (
-            <Link
+            <div
               key={prod.id_producto}
               className="producto-card"
+              onClick={() => setProductoSeleccionado(prod)}
             >
               <div className="producto-img-container">
                 <img
@@ -53,10 +53,16 @@ export default function ProductosZapatos() {
                   ${parseFloat(prod.precio_base).toLocaleString("es-CO")}
                 </p>
               </div>
-            </Link>
+            </div>
           ))
         )}
       </div>
+       {productoSeleccionado && (
+              <DetalleProductoModal
+                producto={productoSeleccionado}
+                onClose={() => setProductoSeleccionado(null)}
+              />
+            )}
     </div>
   );
 }
