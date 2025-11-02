@@ -12,6 +12,10 @@ export const getVarianteById = async (id) => {
   return data;
 };
 
+export const getVariantesByProductoId = async (id_producto) => {
+  return await axios.get(`${API_URL}variantes/productoVariante/${id_producto}`);
+};
+
 export const createVariante = async (formData) => {
  for (const pair of formData.entries()) {
   console.log(pair[0], pair[1]);

@@ -1,0 +1,231 @@
+:root {
+  --primary-color: rgb(235, 146, 12);
+  --primary-hover: rgb(255, 170, 40);
+  --text-color: #222;
+  --light-gray: #f7f7f7;
+  --border-color: #ddd;
+  --shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+  --radius: 18px;
+  --transition: 0.3s ease;
+}
+
+/* 🔸 Fondo general difuminado */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(15, 15, 15, 0.65);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 3000;
+  animation: fadeIn 0.25s ease-out forwards;
+  overflow: visible;
+}
+
+/* 🔸 Tarjeta del modal */
+.modal-content {
+  position: relative;
+  z-index: 3100;
+  background: #fff;
+  border-radius: var(--radius);
+  width: 95%;
+  max-width: 1200px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.35);
+  padding: 30px 40px;
+  animation: slideUp 0.35s ease-out;
+  border-top: 6px solid var(--primary-color);
+}
+
+/* 🔸 Botón de cerrar */
+.cerrar-modal {
+  position: absolute;
+  right: 18px;
+  font-size: 1.4rem;
+  border: none;
+  background: var(--primary-color);
+  color: white;
+  border-radius: 50%;
+  width: 38px;
+  height: 38px;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(235, 146, 12, 0.3);
+  transition: transform 0.2s ease, background 0.3s;
+}
+
+.cerrar-modal:hover {
+  background: var(--primary-hover);
+  transform: rotate(90deg);
+}
+
+/* 🔸 Tarjeta interior del detalle */
+.detalle-card {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 20px;
+}
+
+/* 🔸 Imagen o carrusel */
+.detalle-carousel {
+  flex: 1 1 45%;
+  text-align: center;
+  background: #fff;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: visible;
+  position: relative;
+  z-index: 3200;
+  max-width: 600px;
+  transition: transform var(--transition);
+}
+
+.detalle-carousel:hover {
+  transform: translateY(-4px);
+}
+
+.detalle-img {
+  width: 100%;
+  height: 80vh;
+  object-fit: contain;
+  border-radius: var(--radius);
+  background: #fff;
+  padding: 8px;
+}
+
+/* 🔸 Botones del carrusel */
+.carousel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.55);
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  font-size: 1.8rem;
+  width: 44px;
+  height: 44px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  z-index: 3200; /* 🔹 asegúrate que estén por encima */
+}
+
+.carousel-btn:hover {
+  background: var(--primary-color);
+}
+
+.carousel-btn.prev {
+  left: 12px;
+}
+
+.carousel-btn.next {
+  right: 12px;
+}
+
+/* 🔸 Panel informativo */
+.detalle-info {
+  flex: 1 1 50%;
+  color: var(--text-color);
+  line-height: 1.6;
+}
+
+.detalle-titulo {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--primary-color);
+  margin-bottom: 25px;
+  border-bottom: 2px solid var(--primary-hover);
+  display: inline-block;
+  padding-bottom: 6px;
+}
+
+/* 🔸 Variante */
+.variante-info {
+  background: #fff;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+  padding: 20px;
+  margin-bottom: 20px;
+  transition: all var(--transition);
+}
+
+.variante-info:hover {
+  border-color: var(--primary-hover);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+}
+
+/* 🔸 Color y tallas */
+.color-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.color-circulo {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 2px solid #ccc;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.15);
+}
+
+.variante-info h4 {
+  margin-bottom: 8px;
+  color: var(--primary-hover);
+}
+
+.variante-info ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.variante-info li {
+  background: var(--light-gray);
+  padding: 6px 10px;
+  border-radius: 8px;
+  font-size: 0.95rem;
+}
+
+/* 🔸 Animaciones suaves */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(25px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 🔸 Responsive */
+@media (max-width: 900px) {
+  .detalle-card {
+    flex-direction: column;
+    align-items: center;
+  }
+  .detalle-titulo {
+    text-align: center;
+  }
+  .modal-content {
+    padding: 20px;
+  }
+}

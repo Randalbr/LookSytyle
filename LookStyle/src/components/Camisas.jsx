@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import "../styles/Camisas.css";
-import { getProductos } from "../service/productoService.js"; 
+import { getProductos } from "../service/productoService.js";
+import DetalleProductoModal from "./DetalleProducto.jsx"; // tu componente de detalle
 
 export default function ProductosCamisas() {
   const [productos, setProductos] = useState([]);
+  const [productoSeleccionado, setProductoSeleccionado] = useState(null);
 
   useEffect(() => {
     const fetchProductos = async () => {
@@ -13,9 +14,7 @@ export default function ProductosCamisas() {
         const data = response.data || response;
 
         const camisas = data.filter(
-          (prod) =>
-            prod.categoria &&
-            prod.categoria.toLowerCase() === "camisas"
+          (prod) => prod.categoria?.toLowerCase() === "camisas"
         );
         setProductos(camisas);
       } catch (error) {
@@ -35,9 +34,10 @@ export default function ProductosCamisas() {
           <p>No hay productos disponibles.</p>
         ) : (
           productos.map((prod) => (
-            <Link
+            <div
               key={prod.id_producto}
               className="producto-card"
+              onClick={() => setProductoSeleccionado(prod)} // ✅ al hacer click abre el modal
             >
               <div className="producto-img-container">
                 <img
@@ -53,10 +53,16 @@ export default function ProductosCamisas() {
                   ${parseFloat(prod.precio_base).toLocaleString("es-CO")}
                 </p>
               </div>
-            </Link>
+            </div>
           ))
         )}
       </div>
+      {productoSeleccionado && (
+        <DetalleProductoModal
+          producto={productoSeleccionado}
+          onClose={() => setProductoSeleccionado(null)}
+        />
+      )}
     </div>
   );
 }
