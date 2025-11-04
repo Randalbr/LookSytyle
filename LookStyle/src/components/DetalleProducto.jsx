@@ -110,7 +110,7 @@ export default function DetalleProductoModal({ producto, onClose }) {
                     <strong>
                       $
                       {precioTotal.toLocaleString("es-CO", {
-                        minimumFractionDigits: 2,
+                        minimumFractionDigits: 0,
                       })}
                     </strong>
                   </p>
@@ -118,9 +118,7 @@ export default function DetalleProductoModal({ producto, onClose }) {
                   <h4>Tallas disponibles:</h4>
                   <ul>
                     {v.tallas.map((t) => (
-                      <li key={t.id_talla}>
-                        {t.nombre} — {t.cantidad} unidades
-                      </li>
+                      <li key={t.id_talla}>Talla: {t.nombre}</li>
                     ))}
                   </ul>
                 </div>

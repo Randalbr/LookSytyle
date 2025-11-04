@@ -29,6 +29,7 @@ export default function Categorias() {
           categorias.map((cat) => (
             <Link
               key={cat.id_categoria}
+              to={`/${cat.nombre}`}  // 👈 Enlace dinámico
               className="categoria-card"
             >
               <div className="categoria-img-container">
