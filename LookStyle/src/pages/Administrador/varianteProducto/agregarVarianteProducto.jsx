@@ -231,7 +231,7 @@ export default function FormVariante() {
         </div>
 
         <div className="form-group">
-          <label>Precio:</label>
+          <label>Precio Adcional:</label>
           <input
             type="number"
             min="0"
