@@ -9,6 +9,7 @@ import {
 import { getProductos } from "../../../service/productoService.js";
 import { getColores } from "../../../service/coloresService.js";
 import { getTallas } from "../../../service/tallasService.js";
+import Select from "react-select";
 import "../../../styles/FormPage.css";
 
 export default function FormVariante() {
@@ -175,33 +176,58 @@ export default function FormVariante() {
     }
   };  
   
+  const filtro = function SelectProducto({ productos, idProducto, setIdProducto }) {
+    const opciones = productos.map((p) => ({
+      value: p.id_producto,
+      label: p.nombre,
+    }));
+      
+    const valorSeleccionado = opciones.find((o) => o.value === idProducto) || null;
+  }
+
   return (
     <div className="form-container">
       <h2>{id ? "Editar Variante" : "Agregar Variante"}</h2>
 
       <form onSubmit={handleSubmit} encType="multipart/form-data">
-        <div className="form-group">
+       <div className="form-group select-producto-modern">
           <label>Producto:</label>
-          <select value={idProducto} onChange={(e) => setIdProducto(e.target.value)}>
-            <option value="">Seleccione un producto</option>
-            {productos.map((p) => (
-              <option key={p.id_producto} value={p.id_producto}>
-                {p.nombre}
-              </option>
-            ))}
-          </select>
+          <Select
+            options={productos.map((p) => ({
+              value: p.id_producto,
+              label: p.nombre,
+            }))}
+            value={
+              productos
+                .map((p) => ({ value: p.id_producto, label: p.nombre }))
+                .find((o) => o.value === idProducto) || null
+            }
+            onChange={(opcion) => setIdProducto(opcion?.value || "")}
+            placeholder="Buscar o seleccionar un producto..."
+            isSearchable
+            classNamePrefix="select-custom"
+          />
         </div>
+
 
         <div className="form-group">
           <label>Color:</label>
-          <select value={idColor} onChange={(e) => setIdColor(e.target.value)}>
-            <option value="">Seleccione un color</option>
-            {colores.map((c) => (
-              <option key={c.id_color} value={c.id_color}>
-                {c.nombre}
-              </option>
-            ))}
-          </select>
+         <Select
+            options={colores.map((c) => ({
+              value: c.id_color,
+              label: c.nombre,
+            }))} 
+            value={
+              colores
+                .map((c) => ({ value: c.id_color, label: c.nombre }))
+                .find((o) => o.value === idColor) || null
+            } 
+            onChange={(opcion) => setIdColor(opcion?.value || "")} 
+            placeholder="Seleccione un color..."
+            isSearchable
+            classNamePrefix="select-custom"
+          />
+
         </div>
 
         <div className="form-group">
@@ -229,20 +255,23 @@ export default function FormVariante() {
       <label>Tallas:</label>
 
       <div className="tallas-input">
-        <select
-          value={tallaTemp.id_talla}
-          onChange={(e) =>
-            setTallaTemp({ ...tallaTemp, id_talla: e.target.value })
+       <Select
+          options={opcionesTalla.map((opt) => ({
+            value: opt.id_talla,
+            label: opt.nombre,
+          }))} 
+          value={
+            opcionesTalla
+              .map((opt) => ({ value: opt.id_talla, label: opt.nombre }))
+              .find((o) => o.value === tallaTemp.id_talla) || null
+          } 
+          onChange={(opcion) =>
+            setTallaTemp({ ...tallaTemp, id_talla: opcion?.value || "" })
           }
-        >
-          <option value="">Seleccione una talla</option>
-          {opcionesTalla.map((opt) => (
-            <option key={opt.id_talla} value={opt.id_talla}>
-              {opt.nombre}
-            </option>
-          ))}
-        </select>
-
+          placeholder="Seleccione una talla..."
+          isSearchable
+          classNamePrefix="select-custom"
+        />
         <input
           type="number"
           placeholder="Cantidad"
