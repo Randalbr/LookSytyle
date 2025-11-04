@@ -1,6 +1,8 @@
 import { useState } from "react";
 import '../styles/Navbar.css'
 import logito from '../assets/icono5.jpg'
+import { CiMenuBurger } from "react-icons/ci";
+
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
@@ -15,7 +17,7 @@ export default function Navbar() {
 
          
           <button className="menu-toggle" onClick={() => setOpen(!open)}>
-            ☰
+           <CiMenuBurger />
           </button>
         </div>
 

@@ -33,7 +33,7 @@ export default function Sidebar({ isOpen, onToggle }) {
           <li><Link to="/admin/varianteProductos"><MdOutlineProductionQuantityLimits /> <b>Variantes Productos</b></Link></li>
           <li><Link to="/admin/colores"><IoMdColorPalette /> <b>Colores</b></Link></li>
           <li><Link to="/admin/tallas"><GiClothes /> <b>Tallas</b></Link></li>
-          <li><Link to="/admin/ventas"><IoCashOutline /> <b>Ventas</b></Link></li>
+          {/* <li><Link to="/admin/ventas"><IoCashOutline /> <b>Ventas</b></Link></li> */}
         </ul>
       </nav>
 
