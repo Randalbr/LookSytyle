@@ -3,16 +3,21 @@ import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { getVariantes, deleteVariante } from "../../../service/varianteService.js";
 import AdminTable from "../../../components/AdminTable.jsx";
+import DetalleProductoModal from "../../../components/DetalleProducto.jsx";
+
 
 export default function VarianteProducto() {
   const [varianteProducto, setVarianteProducto] = useState([]);
   const navigate = useNavigate();
+  const [productoSeleccionado, setProductoSeleccionado] = useState(null);
 
   const loadVarianteProducto = async () => {
     try {
       const data = await getVariantes();
+      console.log("data",data)
       const formatted = data.map((v) => ({
         id: v.id_variante,
+        id_producto: v.id_producto,
         producto: v.producto,
         color: v.color,
         precio: `$${v.precio.toLocaleString()}`,
@@ -55,7 +60,16 @@ export default function VarianteProducto() {
         await loadVarianteProducto();
   };
 
+  const handleView = (producto) => {
+    const productoConId = {
+      ...producto,
+      id_producto: producto.id_producto || producto.id, 
+    };
+    setProductoSeleccionado(productoConId);
+  };
+
   return (
+    <>
     <AdminTable
       title="Gestión de Variantes de Producto"
       data={varianteProducto}
@@ -71,6 +85,14 @@ export default function VarianteProducto() {
       onAdd={handleAdd}
       onEdit={handleEdit}
       onDelete={handleDeleteVarianteProducto}
+      onView={handleView} // 👈 Nuevo
     />
+    {productoSeleccionado && (
+        <DetalleProductoModal
+          producto={productoSeleccionado}
+          onClose={() => setProductoSeleccionado(null)}
+        />
+      )}
+    </>
   );
 }

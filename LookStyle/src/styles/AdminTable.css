@@ -34,6 +34,7 @@ th {
 }
 
 .btn-edit,
+.btn-view,
 .btn-delete {
   border: none;
   background: none;
@@ -43,6 +44,9 @@ th {
   transition: color 0.2s;
 }
 
+.btn-view:hover {
+  color: #fff;
+}
 .btn-edit:hover {
   color: #fff;
 }
@@ -142,6 +146,7 @@ tr:hover td {
 }
 
 .btn-edit,
+.btn-view,
 .btn-delete {
   border: none;
   padding: 8px 10px;
@@ -151,17 +156,18 @@ tr:hover td {
 }
 
 
+.btn-view:hover {
+  background-color: rgb(12, 101, 235) ;
+}
 .btn-edit:hover {
   background-color: rgb(235, 146, 12) ;
 }
 
-.btn-delete {
-  color: rgb(0, 0, 0);
+.btn-delete:hover {
+  color: rgb(255, 255, 255);
+   background-color: rgb(250, 0, 0);
 }
 
-.btn-delete:hover {
-  background-color: rgb(235, 146, 12);
-}
 
 .no-results {
   text-align: center;

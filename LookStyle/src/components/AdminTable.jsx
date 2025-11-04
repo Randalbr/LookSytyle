@@ -2,9 +2,8 @@ import { useState } from "react";
 import Swal from "sweetalert2";
 import "../styles/AdminTable.css";
 import { CgAdd } from "react-icons/cg";
-import { MdDelete, MdNavigateBefore, MdNavigateNext } from "react-icons/md";
+import { MdDelete, MdNavigateBefore, MdNavigateNext, MdVisibility } from "react-icons/md";
 import { FaPen } from "react-icons/fa";
-
 
 export default function AdminTable({
   title,
@@ -13,6 +12,7 @@ export default function AdminTable({
   onAdd,
   onEdit,
   onDelete,
+  onView, // 👈 NUEVA PROP
 }) {
   const [search, setSearch] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
@@ -71,7 +71,7 @@ export default function AdminTable({
             value={search}
             onChange={(e) => {
               setSearch(e.target.value);
-              setCurrentPage(1); // reiniciar a la primera página al buscar
+              setCurrentPage(1);
             }}
             className="search-input"
           />
@@ -125,7 +125,12 @@ export default function AdminTable({
                   </td>
                 ))}
                 <td>
-                   <button className="btn-edit" onClick={() => onEdit(row)}>
+                 {onView && (
+                    <button className="btn-view" onClick={() => onView(row)}>
+                      <MdVisibility />
+                    </button>
+                  )}
+                  <button className="btn-edit" onClick={() => onEdit(row)}>
                     <FaPen />
                   </button>
                   <button
@@ -147,7 +152,6 @@ export default function AdminTable({
         </tbody>
       </table>
 
-      {/* 📑 Paginación */}
       {totalPages > 1 && (
         <div className="pagination">
           <button
@@ -155,15 +159,13 @@ export default function AdminTable({
             onClick={() => handlePageChange(currentPage - 1)}
             disabled={currentPage === 1}
           >
-           <MdNavigateBefore /> Anterior
+            <MdNavigateBefore /> Anterior
           </button>
 
           {[...Array(totalPages)].map((_, index) => (
             <button
               key={index}
-              className={`page-btn ${
-                currentPage === index + 1 ? "active" : ""
-              }`}
+              className={`page-btn ${currentPage === index + 1 ? "active" : ""}`}
               onClick={() => handlePageChange(index + 1)}
             >
               {index + 1}
