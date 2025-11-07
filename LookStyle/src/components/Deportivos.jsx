@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import "../styles/Camisas.css";
-import { getProductos } from "../service/productoService.js";
+import { getProductos } from "../service/productoService.js"; 
 import DetalleProductoModal from "./DetalleProducto.jsx";
 
-export default function ProductosCamisas() {
+export default function ProductosDeportivos() {
   const [productos, setProductos] = useState([]);
   const [filtro, setFiltro] = useState("");
   const [rangoPrecio, setRangoPrecio] = useState("");
@@ -15,10 +15,10 @@ export default function ProductosCamisas() {
         const response = await getProductos();
         const data = response.data || response;
 
-        const camisas = data.filter(
-          (prod) => prod.categoria?.toLowerCase() === "camisas"
+        const deportivos = data.filter(
+          (prod) => prod.categoria?.toLowerCase() === "deportivos"
         );
-        setProductos(camisas);
+        setProductos(deportivos);
       } catch (error) {
         console.error("Error al obtener productos:", error);
       }
@@ -44,7 +44,7 @@ export default function ProductosCamisas() {
 
   return (
     <div className="productos-container">
-      <h2 className="productos-title">Camisas</h2>
+      <h2 className="productos-title">Deportivos</h2>
         <div className="buscador-container">
           <input
             type="text"
@@ -96,12 +96,12 @@ export default function ProductosCamisas() {
           ))
         )}
       </div>
-      {productoSeleccionado && (
-        <DetalleProductoModal
-          producto={productoSeleccionado}
-          onClose={() => setProductoSeleccionado(null)}
-        />
-      )}
+       {productoSeleccionado && (
+              <DetalleProductoModal
+                producto={productoSeleccionado}
+                onClose={() => setProductoSeleccionado(null)}
+              />
+            )}
     </div>
   );
 }

@@ -10,6 +10,7 @@ import Camisas from "./pages/Camisas";
 import Pantalones from "./pages/Pantalones";
 import Zapatos from "./pages/Zapatos";
 import Accesorios from "./pages/Accesorios";
+import Deportivos from "./pages/Deportivos";
 
 
 // Rutas Protegidas
@@ -42,10 +43,11 @@ function App() {
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/" element={<Home />} />
-          <Route path="/camisas" element={<Camisas />} />
-          <Route path="/pantalones" element={<Pantalones />} />
-          <Route path="/zapatos" element={<Zapatos />} />
-          <Route path="/accesorios" element={<Accesorios />} />
+          <Route path="/Camisas" element={<Camisas />} />
+          <Route path="/Pantalones" element={<Pantalones />} />
+          <Route path="/Zapatos" element={<Zapatos />} />
+          <Route path="/Accesorios" element={<Accesorios />} />
+          <Route path="/Deportivos" element={<Deportivos />} />
           
            {/* Rutas protegidas */}
           <Route

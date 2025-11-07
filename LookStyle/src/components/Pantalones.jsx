@@ -70,7 +70,7 @@ export default function ProductosPantalones() {
 
       <div className="productos-grid">
         {productosFiltrados.length === 0 ? (
-          <p>No hay productos que coincidan con la búsqueda.</p>
+          <p>No hay productos.</p>
         ) : (
           productosFiltrados.map((prod) => (
             <div
