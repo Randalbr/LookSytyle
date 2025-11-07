@@ -2,12 +2,16 @@ import { useEffect, useState } from "react";
 import "../styles/Camisas.css";
 import { getProductos } from "../service/productoService.js";
 import DetalleProductoModal from "./DetalleProducto.jsx";
+import { MdNavigateBefore, MdNavigateNext } from "react-icons/md";
 
 export default function ProductosAllProducts() {
   const [productos, setProductos] = useState([]);
   const [filtro, setFiltro] = useState("");
   const [rangoPrecio, setRangoPrecio] = useState("");
   const [productoSeleccionado, setProductoSeleccionado] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const itemsPerPage = 12; 
 
   useEffect(() => {
     const fetchProductos = async () => {
@@ -38,37 +42,55 @@ export default function ProductosAllProducts() {
     return nombreCoincide && cumpleRango;
   });
 
+  const totalPages = Math.ceil(productosFiltrados.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const productosPagina = productosFiltrados.slice(
+    startIndex,
+    startIndex + itemsPerPage
+  );
+
+  const handlePageChange = (page) => {
+    if (page >= 1 && page <= totalPages) setCurrentPage(page);
+  };
+
   return (
     <div className="productos-container">
       <h2 className="productos-title">Productos Look Style</h2>
-        <div className="buscador-container">
-          <input
-            type="text"
-            placeholder="Buscar por nombre..."
-            value={filtro}
-            onChange={(e) => setFiltro(e.target.value)}
-            className="input-busqueda"
-          />
 
-          <div className="filtro-precio">
-            <select
-              value={rangoPrecio}
-              onChange={(e) => setRangoPrecio(e.target.value)}
-              className="select-precio"
-            >
-              <option value="">Todos los precios</option>
-              <option value="bajo">Menos de $50.000</option>
-              <option value="medio">Entre $50.000 y $100.000</option>
-              <option value="alto">Más de $100.000</option>
-            </select>
-          </div>
+      <div className="buscador-container">
+        <input
+          type="text"
+          placeholder="Buscar por nombre..."
+          value={filtro}
+          onChange={(e) => {
+            setFiltro(e.target.value);
+            setCurrentPage(1); 
+          }}
+          className="input-busqueda"
+        />
+
+        <div className="filtro-precio">
+          <select
+            value={rangoPrecio}
+            onChange={(e) => {
+              setRangoPrecio(e.target.value);
+              setCurrentPage(1);
+            }}
+            className="select-precio"
+          >
+            <option value="">Todos los precios</option>
+            <option value="bajo">Menos de $50.000</option>
+            <option value="medio">Entre $50.000 y $100.000</option>
+            <option value="alto">Más de $100.000</option>
+          </select>
         </div>
+      </div>
 
       <div className="productos-grid">
-        {productosFiltrados.length === 0 ? (
+        {productosPagina.length === 0 ? (
           <p>No hay productos.</p>
         ) : (
-          productosFiltrados.map((prod) => (
+          productosPagina.map((prod) => (
             <div
               key={prod.id_producto}
               className="producto-card"
@@ -92,6 +114,37 @@ export default function ProductosAllProducts() {
           ))
         )}
       </div>
+
+      {totalPages > 1 && (
+        <div className="pagination">
+          <button
+            className="page-btn"
+            onClick={() => handlePageChange(currentPage - 1)}
+            disabled={currentPage === 1}
+          >
+            <MdNavigateBefore /> Anterior
+          </button>
+
+          {[...Array(totalPages)].map((_, index) => (
+            <button
+              key={index}
+              className={`page-btn ${currentPage === index + 1 ? "active" : ""}`}
+              onClick={() => handlePageChange(index + 1)}
+            >
+              {index + 1}
+            </button>
+          ))}
+
+          <button
+            className="page-btn"
+            onClick={() => handlePageChange(currentPage + 1)}
+            disabled={currentPage === totalPages}
+          >
+            Siguiente <MdNavigateNext />
+          </button>
+        </div>
+      )}
+
       {productoSeleccionado && (
         <DetalleProductoModal
           producto={productoSeleccionado}
