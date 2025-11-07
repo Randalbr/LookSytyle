@@ -1,6 +1,7 @@
 import { useState } from "react";
 import '../styles/Home.css'
 import Categorias from '../components/Categorias'
+import AllProducts from '../components/AllProducts'
 import Inicio from "../assets/Inicio.jpg";
 import Pantalones from "../assets/Pantalones.jpg";
 import Camisas from "../assets/Camisas.jpg";
@@ -77,6 +78,7 @@ export default function Home() {
       </div>
     </div>
     <Categorias />
+    <AllProducts />
     <Footer/>
     </>
   );

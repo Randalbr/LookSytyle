@@ -1,5 +1,5 @@
 import '../styles/Footer.css'
-import { FaFacebook, FaInstagram, FaTwitter } from "react-icons/fa";
+import { FaFacebook, FaInstagram, FaTwitter, FaWhatsapp  } from "react-icons/fa";
 
 export default function Footer() {
   return (
@@ -8,9 +8,9 @@ export default function Footer() {
       <div className="footerContenido">
         <nav>
           <ul>
-            <li><a href="#">Sobre Nosotros</a></li>
+            {/* <li><a href="#">Sobre Nosotros</a></li>
             <li><a href="#">Contacto</a></li>
-            <li><a href="#">Políticas</a></li>
+            <li><a href="#">Políticas</a></li> */}
           </ul>
         </nav>
           <p>© {new Date().getFullYear()} Look Style. Todos los derechos reservados.</p>
@@ -24,6 +24,9 @@ export default function Footer() {
           </a>
           <a href="https://twitter.com" target="_blank" rel="noreferrer">
             <FaTwitter />
+          </a>
+          <a href="https://twitter.com" target="_blank" rel="noreferrer">
+            <FaWhatsapp />
           </a>
         </div>
 
