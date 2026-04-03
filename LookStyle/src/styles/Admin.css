@@ -1,29 +1,31 @@
-
 .sidebar {
   position: fixed;
   top: 0;
   left: 0;
-  width: 230px;
+  width: 240px;
   height: 100vh;
-  background: #111; 
+  background: #0f0f0f;
   color: #fff;
   display: flex;
   flex-direction: column;
-  align-items: center;
   padding-top: 25px;
-  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.3);
+  box-shadow: 4px 0 20px rgba(0, 0, 0, 0.4);
   z-index: 1000;
   transition: all 0.3s ease;
 }
 
+/* Logo / Title */
 .sidebar h2 {
-  font-size: 1.5rem;
-  margin-bottom: 30px;
-  color: rgb(235, 146, 12); 
+  font-size: 1.4rem;
+  margin-bottom: 35px;
+  color: #c9a96e;
   text-transform: uppercase;
-  letter-spacing: 2px;
+  letter-spacing: 3px;
+  text-align: center;
+  font-weight: 700;
 }
 
+/* Navigation */
 .sidebar nav {
   width: 100%;
 }
@@ -38,20 +40,25 @@
   width: 100%;
 }
 
+/* Links */
 .sidebar ul li a {
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 12px 20px;
-  color: #ccc;
-  font-size: 1rem;
+  padding: 14px 22px;
+  color: #bbb;
+  font-size: 0.95rem;
   text-decoration: none;
-  transition: all 0.2s ease-in-out;
+  transition: all 0.25s ease;
+  border-left: 3px solid transparent;
 }
 
+/* Hover estilo tienda premium */
 .sidebar ul li a:hover {
-  background: rgb(235, 146, 12);
+  background: rgba(235, 146, 12, 0.08);
   color: #fff;
+  border-left: 3px solid rgb(235, 146, 12);
+  padding-left: 26px;
 }
 
 .sidebar ul li a b {
@@ -59,34 +66,41 @@
 }
 
 .sidebar svg {
-  font-size: 1.4rem;
+  font-size: 1.3rem;
+  opacity: 0.8;
 }
 
+/* Logout Button */
 .Logut {
   margin-top: auto;
-  margin-bottom: 40px;
-  padding: 10px 20px;
-  background: #e74c3c;
-  border: none;
-  border-radius: 5px;
-  color: #fff;
+  margin-bottom: 30px;
+  margin-left: 20px;
+  margin-right: 20px;
+  padding: 12px;
+  background: transparent;
+  border: 1px solid #e74c3c;
+  border-radius: 6px;
+  color: #e74c3c;
   font-weight: 600;
   cursor: pointer;
-  transition: background 0.2s ease;
+  transition: all 0.25s ease;
 }
 
 .Logut:hover {
-  background: #c0392b;
+  background: #e74c3c;
+  color: #fff;
 }
 
+/* Content */
 .admin-content {
-  margin-left: 230px; 
-  padding: 30px;
-  background: #f5f5f5;
+  margin-left: 240px;
+  padding: 35px;
+  background: #f8f8f8;
   min-height: 100vh;
   transition: all 0.3s ease;
 }
 
+/* Menu buttons */
 .menu-btn {
   display: none;
   background: none;
@@ -109,6 +123,7 @@
   cursor: pointer;
 }
 
+/* Responsive */
 @media (max-width: 768px) {
   .menu-btn {
     display: block;
@@ -119,9 +134,7 @@
   }
 
   .sidebar {
-    position: fixed;
     left: -100%;
-    transition: left 0.3s ease;
   }
 
   .sidebar.open {
@@ -130,42 +143,15 @@
 
   .admin-content {
     margin-left: 0;
-  }
-}
-
-
-/* 🧩 Responsive */
-@media (max-width: 768px) {
-  .sidebar {
-    width: 180px;
-  }
-
-  .sidebar h2 {
-    font-size: 1.2rem;
-  }
-
-  .sidebar ul li a {
-    font-size: 0.9rem;
-    padding: 10px 15px;
-  }
-
-  .admin-content {
-    margin-left: 180px;
   }
 }
 
 @media (max-width: 600px) {
   .sidebar {
-    position: absolute;
-    left: -100%;
-    transition: left 0.3s ease;
-  }
-
-  .sidebar.open {
-    left: 0;
+    width: 200px;
   }
 
   .admin-content {
     margin-left: 0;
   }
-}
+} 

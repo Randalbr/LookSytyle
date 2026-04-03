@@ -1,50 +1,63 @@
+:root {
+  --primary-color: #c9a96e;
+  --primary-hover: #b89555;
+}
+
+/* Contenedor */
 .carousel {
   position: relative;
   width: 100%;
-  height: 500px;
+  height: 520px;
   overflow: hidden;
 }
 
+/* Slide */
 .carousel-slide {
   position: relative;
   width: 100%;
   height: 100%;
 }
 
+/* Overlay degradado elegante */
 .overlay {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.4); /* más alto = más oscuro */
+  inset: 0;
+  background: linear-gradient(
+    to right,
+    rgba(0,0,0,0.7),
+    rgba(0,0,0,0.3),
+    rgba(0,0,0,0.1)
+  );
   z-index: 1;
 }
 
+/* Imagen */
 .carousel-slide img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
+/* Texto */
 .caption {
   position: absolute;
-  bottom: 50px;
-  left: 50px;
+  bottom: 70px;
+  left: 60px;
   color: white;
   z-index: 2;
-  text-shadow: 2px 2px 8px rgba(0,0,0,0.7);
+  max-width: 500px;
 }
 
 .caption h2 {
-  font-size: 36px;
+  font-size: 42px;
   margin: 0;
+  font-weight: 700;
 }
-
 
 .caption p {
   font-size: 18px;
-  margin-top: 10px;
+  margin-top: 12px;
+  opacity: 0.9;
 }
 
 /* Flechas */
@@ -52,47 +65,81 @@
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  font-size: 40px;
-  background: rgba(0,0,0,0.3);
+  width: 48px;
+  height: 48px;
+  background: rgba(0,0,0,0.4);
   border: none;
   color: white;
   cursor: pointer;
-  padding: 5px 15px;
   border-radius: 50%;
   z-index: 10;
-  transition: background 0.3s;
+  transition: all 0.25s ease;
 }
 
 .arrow:hover {
-  background: rgba(0,0,0,0.6);
+  background: var(--primary-color);
+  transform: translateY(-50%) scale(1.05);
 }
 
 .arrow.left {
-  left: 20px;
+  left: 25px;
 }
 
 .arrow.right {
-  right: 20px;
+  right: 25px;
 }
 
-/* Puntos de navegación */
+/* Dots */
 .dots {
   position: absolute;
-  bottom: 15px;
+  bottom: 20px;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
-  gap: 8px;
+  gap: 10px;
+  z-index: 2;
 }
 
 .dot {
-  width: 12px;
-  height: 12px;
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
   background: rgba(255,255,255,0.5);
   cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.dot:hover {
+  background: white;
 }
 
 .dot.active {
-  background: white;
+  width: 25px;
+  border-radius: 10px;
+  background: var(--primary-color);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .carousel {
+    height: 400px;
+  }
+
+  .caption {
+    left: 20px;
+    bottom: 40px;
+  }
+
+  .caption h2 {
+    font-size: 28px;
+  }
+
+  .caption p {
+    font-size: 14px;
+  }
+
+  .arrow {
+    width: 40px;
+    height: 40px;
+  }
 }

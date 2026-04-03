@@ -1,66 +1,77 @@
-.navbar {  
-    width: 100%;
-      position: relative;
-  z-index: 1000; /* más alto que el overlay del carrusel */
+:root {
+  --primary-color: #f3ac27;
+  --primary-hover: #f3a920;
 }
 
+/* Navbar */
+.navbar {
+  width: 100%;
+  position: relative;
+  z-index: 1000;
+  background: #fff;
+}
+
+/* Header superior */
 .cabezeraPrincipal {
-  position: relative; /* para que el h1 se posicione dentro */
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 10px 20px;
-  border-bottom: 1px solid #000;
+  padding: 12px 25px;
+  border-bottom: 1px solid #eee;
 }
 
+/* Logo */
 .cabezeraPrincipal img {
-  width: 40px;
-  height: 40px;
+  width: 42px;
+  height: 42px;
   border-radius: 50%;
 }
 
+/* Title */
 .cabezeraPrincipal h1 {
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
-  font-size: 20px;
-  font-weight: bold;
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: 1px;
 }
 
-
-
+/* Nav inferior */
 .cabezeraNormal {
-background-color: #000;
-color: white;
-height: auto;
-  border-bottom: 1px solid #000;
+  background: #111;
 }
 
 .cabezeraNormal ul {
   display: flex;
   justify-content: center;
   list-style: none;
-  gap: 60px;
-  padding: 10px 0;
-}
-.cabezeraNormal ul a{
-  text-decoration: none;
-  color: white;
+  gap: 50px;
+  padding: 12px 0;
+  margin: 0;
 }
 
+.cabezeraNormal ul a {
+  text-decoration: none;
+  color: white;
+  font-weight: 500;
+}
+
+/* Items */
 .cabezeraNormal ul li {
   cursor: pointer;
-  transition: color 0.2s;
+  padding: 6px 14px;
+  border-radius: 6px;
+  transition: all 0.25s ease;
 }
 
 .cabezeraNormal ul li:hover {
-color: rgb(0, 0, 0);
-background-color: rgb(235, 146, 12);
-border-radius: 10px;
-padding: 2px 30px;
-align-items: center;
+  background: var(--primary-color);
+  color: #000;
 }
 
+/* Hamburger */
 .menu-toggle {
   display: none;
   font-size: 26px;
@@ -69,33 +80,44 @@ align-items: center;
   cursor: pointer;
 }
 
-/* 📱 Responsive */
+/* Mobile */
 @media (max-width: 768px) {
-  /* Ocultar línea inferior */
-  .cabezeraNormal {
-    display: none;
-  }
 
-  /* Mostrar hamburguesa */
   .menu-toggle {
     display: block;
   }
 
-  /* Menú desplegable en móvil */
+  .cabezeraNormal {
+    display: none;
+  }
+
   .cabezeraNormal.open {
-      background-color: #000;
     display: block;
     position: absolute;
     top: 60px;
     left: 0;
     width: 100%;
-    border-top: 1px solid #000;
-    padding: 20px 0;
+    background: #111;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    animation: slideDown 0.25s ease;
   }
 
   .cabezeraNormal.open ul {
     flex-direction: column;
     align-items: center;
-    gap: 20px;
+    gap: 18px;
+    padding: 20px 0;
+  }
+}
+
+/* Animation */
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }

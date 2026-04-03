@@ -1,100 +1,132 @@
 :root {
-  --primary-color: rgb(235, 146, 12);
-  --primary-hover: rgb(255, 170, 40);
+  --primary-color: #c9a96e;
+  --primary-hover: #b89555;
+  --border-color: #e5e5e5;
+  --text-color: #333;
+  --radius: 12px;
 }
 
+/* Contenedor */
 .form-container {
   max-width: 750px;
   margin: 60px auto;
-  padding: 30px;
-  background: white;
-  border-radius: 12px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-  text-align: center;
+  padding: 35px;
+  background: #fff;
+  border-radius: var(--radius);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.08);
 }
 
+/* Título */
 .form-container h2 {
-  color: var(--primary-color);
-  margin-bottom: 20px;
-  font-size: 1.6rem;
+  color: #111;
+  margin-bottom: 25px;
+  font-size: 1.5rem;
+  font-weight: 600;
 }
 
+.form-container h2::after {
+  content: "";
+  display: block;
+  width: 40px;
+  height: 3px;
+  background: var(--primary-color);
+  margin-top: 8px;
+}
+
+/* Grupo */
 .form-group {
   margin-bottom: 20px;
-  text-align: left;
 }
 
 .form-group label {
-  font-weight: bold;
-  color: #555;
+  font-weight: 500;
+  color: var(--text-color);
+  display: block;
+  margin-bottom: 6px;
 }
 
+/* Inputs */
 .form-group input {
   width: 100%;
-  padding: 10px;
-  border: 1px solid #ddd;
+  padding: 11px 12px;
+  border: 1px solid var(--border-color);
   border-radius: 8px;
-  margin-top: 8px;
-  font-size: 1rem;
+  font-size: 0.95rem;
+  transition: all 0.2s ease;
 }
 
+.form-group input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(201, 169, 110, 0.15);
+}
+
+/* Botones */
 .form-buttons {
   display: flex;
-  justify-content: space-between;
+  gap: 10px;
+  margin-top: 25px;
 }
 
 .btn-cancel,
 .btn-save {
   flex: 1;
-  margin: 0 5px;
-  padding: 10px;
+  padding: 11px;
   border: none;
   border-radius: 8px;
-  color: white;
-  font-weight: bold;
+  font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all 0.25s ease;
 }
 
+/* Cancel */
 .btn-cancel {
-  background: #e74c3c;
+  background: #f1f1f1;
+  color: #333;
 }
 
 .btn-cancel:hover {
-  background: #c0392b;
+  background: #e5e5e5;
 }
 
+/* Save */
 .btn-save {
   background: var(--primary-color);
+  color: white;
 }
 
 .btn-save:hover {
   background: var(--primary-hover);
+  transform: translateY(-1px);
 }
 
+/* Tallas */
 .talla-item {
   display: flex;
   align-items: center;
-  gap: 10px;
-  margin-top: 8px;
-  padding: 8px;
-  background: #fff;
-  border: 1px solid #ddd;
+  gap: 12px;
+  margin-top: 10px;
+  padding: 10px;
+  background: #fafafa;
+  border: 1px solid var(--border-color);
   border-radius: 10px;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
 }
 
 .talla-item input {
-  width: 80px;
-  padding: 4px;
+  width: 90px;
 }
 
+/* Delete */
 .btn-delete {
   background: #ff4d4d;
   border: none;
   color: white;
   border-radius: 6px;
   cursor: pointer;
-  padding: 4px 8px;
+  padding: 6px 10px;
+  transition: 0.2s ease;
 }
 
+.btn-delete:hover {
+  background: #e60000;
+}

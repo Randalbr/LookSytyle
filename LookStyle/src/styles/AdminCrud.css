@@ -1,73 +1,108 @@
 .admin-crud {
   padding: 30px;
-  background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background: #ffffff;
+  border-radius: 14px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
   margin: 20px;
 }
 
+/* Title */
 .admin-crud h2 {
-  margin-bottom: 20px;
+  margin-bottom: 25px;
   color: #111;
   text-align: center;
+  font-weight: 600;
+  letter-spacing: 1px;
 }
 
+/* Form */
 .crud-form {
   display: flex;
-  gap: 10px;
-  margin-bottom: 20px;
+  gap: 12px;
+  margin-bottom: 25px;
   justify-content: center;
+  flex-wrap: wrap;
 }
 
+/* Input */
 .crud-form input {
-  padding: 10px;
-  width: 250px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
+  padding: 12px 14px;
+  width: 260px;
+  border-radius: 6px;
+  border: 1px solid #e5e5e5;
+  transition: all 0.25s ease;
+  font-size: 0.95rem;
 }
 
+.crud-form input:focus {
+  outline: none;
+  border-color: #c9a96e;
+  box-shadow: 0 0 0 2px rgba(201, 169, 110, 0.15);
+}
+
+/* Button */
 .crud-form button {
-  background-color: #00bfa6;
+  background-color: #c9a96e;
   color: white;
   border: none;
-  padding: 10px 20px;
+  padding: 12px 22px;
   border-radius: 6px;
   cursor: pointer;
-  transition: 0.3s;
+  transition: all 0.25s ease;
+  font-weight: 500;
+  letter-spacing: 0.5px;
 }
 
 .crud-form button:hover {
-  background-color: #009d8a;
+  background-color: #b89555;
+  transform: translateY(-1px);
 }
 
+/* Table */
 table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 10px;
+  margin-top: 15px;
 }
 
+/* Cells */
 th, td {
-  padding: 12px;
-  border-bottom: 1px solid #ddd;
+  padding: 14px;
+  border-bottom: 1px solid #f0f0f0;
   text-align: center;
 }
 
+/* Header */
 th {
-  background-color: #00bfa6;
-  color: white;
+  background-color: #111;
+  color: #c9a96e;
+  font-weight: 600;
+  letter-spacing: 0.5px;
 }
 
-.btn-edit, .btn-delete {
+/* Row hover */
+tbody tr:hover {
+  background: #fafafa;
+}
+
+/* Buttons */
+.btn-edit,
+.btn-delete {
   border: none;
   cursor: pointer;
   background: none;
   font-size: 1.2rem;
+  transition: all 0.2s ease;
 }
 
+/* Edit */
 .btn-edit:hover {
-  color: #009d8a;
+  color: #c9a96e;
+  transform: scale(1.1);
 }
 
+/* Delete */
 .btn-delete:hover {
   color: #e74c3c;
+  transform: scale(1.1);
 }
